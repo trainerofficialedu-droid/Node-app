@@ -28,6 +28,7 @@ jobs:
             
             cd /var/www/Node-app
 
+
             echo "Pulling latest code..."
             git pull origin main
 
