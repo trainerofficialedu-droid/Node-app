@@ -1,0 +1,49 @@
+name: Deploy MERN DevOps Dashboard to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Latest Code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
+
+      - name: Deploy to EC2 Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/ec2.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            
+            cd /var/www/Node-app
+
+            echo "Pulling latest code..."
+            git pull origin main
+
+            echo "Installing backend dependencies..."
+            cd backend
+            npm install
+
+            echo "Building frontend production files..."
+            cd ../frontend
+            npm install
+            npm run build
+
+            echo "Restarting PM2 backend..."
+            cd ../backend
+            pm2 restart devops-dashboard || pm2 start ecosystem.config.js
+
+            echo "Deployment Completed Successfully"
+
+          EOF
