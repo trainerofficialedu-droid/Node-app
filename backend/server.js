@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
+});
+
 app.get('/api/status', (req, res) => {
   res.json({
     environment: 'Production',
@@ -27,11 +32,13 @@ app.get('/api/metrics', (req, res) => {
 });
 
 app.get('/api/deployments', (req, res) => {
+  const now = new Date().toLocaleTimeString();
+
   res.json([
-    { id: 1, message: 'Developer pushed code to GitHub', time: '2 mins ago' },
-    { id: 2, message: 'GitHub Actions pipeline started', time: '90 sec ago' },
-    { id: 3, message: 'EC2 server pulled latest code', time: '30 sec ago' },
-    { id: 4, message: 'PM2 restarted backend service', time: 'just now' }
+    { id: 1, message: 'Developer pushed code to GitHub', time: now },
+    { id: 2, message: 'GitHub Actions pipeline executed', time: now },
+    { id: 3, message: 'EC2 server synchronized latest commit', time: now },
+    { id: 4, message: 'PM2 restarted application successfully', time: now }
   ]);
 });
 
