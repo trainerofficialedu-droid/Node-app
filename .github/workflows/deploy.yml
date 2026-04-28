@@ -1,6 +1,5 @@
 name: Deploy MERN DevOps Dashboard to EC2
 
-
 on:
   push:
     branches:
