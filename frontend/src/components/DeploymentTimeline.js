@@ -1,13 +1,20 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 function DeploymentTimeline({ deployments }) {
   return (
-    <div className="card glass">
-      <h2>Deployment Timeline </h2>
+    <motion.div 
+      initial={{opacity:0,y:20}}
+      animate={{opacity:1,y:0}}
+      className="glass-card"
+    >
+      <h2 className="section-title">Deployment Activity Timeline</h2>
       {deployments.map(item => (
-        <p key={item.id}> {item.message} — {item.time}</p>
+        <div key={item.id} className="timeline-item">
+          {item.message} — <strong>{item.time}</strong>
+        </div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 

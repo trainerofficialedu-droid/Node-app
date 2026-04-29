@@ -1,35 +1,74 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(135deg, #0f172a, #1e293b, #111827);
   color: white;
 }
 
-.container {
-  max-width: 1000px;
-  margin: auto;
+.dashboard {
+  min-height: 100vh;
   padding: 30px;
 }
 
-.title {
+.main-title {
   text-align: center;
-  font-size: 42px;
-  margin-bottom: 30px;
+  font-size: 2.5rem;
+  margin-bottom: 35px;
+  color: #38bdf8;
+  text-shadow: 0 0 20px rgba(56,189,248,0.5);
 }
 
-.card {
-  margin: 20px 0;
-  padding: 25px;
-  border-radius: 20px;
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(350px,1fr));
+  gap: 25px;
+  margin-bottom: 25px;
 }
 
-.glass {
+.glass-card {
   background: rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 25px;
   backdrop-filter: blur(12px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-  transition: 0.3s;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
 }
 
-.glass:hover {
+.glass-card:hover {
   transform: translateY(-5px);
+}
+
+.section-title {
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+  color: #67e8f9;
+}
+
+.metric {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+.timeline-item {
+  padding: 14px;
+  margin: 10px 0;
+  border-left: 4px solid #38bdf8;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+}
+
+.live-dot {
+  height: 10px;
+  width: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7);}
+  70% { box-shadow: 0 0 0 10px rgba(34,197,94,0);}
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0);}
 }

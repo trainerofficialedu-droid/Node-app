@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import StatusCard from './components/StatusCard';
 import MetricsPanel from './components/MetricsPanel';
 import DeploymentTimeline from './components/DeploymentTimeline';
+import './App.css';
 
 function App() {
   const [status, setStatus] = useState({});
@@ -27,13 +28,20 @@ function App() {
   }, []);
 
   return (
-    <div className="container">
-      <motion.h1 initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}} className="title">
-        DevOps Monitoring Dashboard 
+    <div className="dashboard">
+      <motion.h1 
+        initial={{ opacity: 0, y: -30 }} 
+        animate={{ opacity: 1, y: 0 }}
+        className="main-title"
+      >
+        AWS DevOps Live Monitoring Dashboard
       </motion.h1>
 
-      <StatusCard status={status} />
-      <MetricsPanel metrics={metrics} />
+      <div className="grid-layout">
+        <StatusCard status={status} />
+        <MetricsPanel metrics={metrics} />
+      </div>
+
       <DeploymentTimeline deployments={deployments} />
     </div>
   );
